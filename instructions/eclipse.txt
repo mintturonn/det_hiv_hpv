@@ -1,0 +1,44 @@
+
+1. Fire up Eclipse. On the first time of running, it asks where its working directory should be. I've got mine as "eclipse" in my home directory (ie, /Users/XXX/eclipse - and inside that eclipse folder, Eclipse will create folders for each project). 
+ 
+2. From the top menu,
+	•	File,
+	◦	New, C/C++ Project.
+	•	Choose "C++ Managed Build" from the next menu.
+	•	For project name, I suggest lower-case, no spaces, and use underscore instead of dash. (eg, hiv_hpv) - as this will be the name of the final file it produces, so keep it simple.
+	•	In "Project type" choose "Executable -> Empty Project", and
+	•	in Toolchains, you should have "MacOSX GCC" to choose.
+	•	"Finish" to create the project. This will have created a folder in the Eclipse workspace.
+ 
+3. So, now copy all the .cpp and .h files for the project into the folder ~/eclipse/hiv_hpv (assuming the same workspace name and project name as I did…
+ 
+4. In Eclipse, you should see your new project in the "Project Explorer" on the left, but it won't have any files yet. Right click on the "hiv_hpv" and about half way down there's a "Refresh" button, which will make all the files appear.
+ 
+Interlude: When building C code, you usually have two "modes" of operation, called "Debug" and "Release". This is true for Visual Studio and Eclipse, and probably other C++ environments too.
+	•	 The basic story is that this "mode" is a bunch of settings and flags that get set for the compiler, which changes the way it compiles your code, and the nature of the executable it produces.
+	•	DEBUG: has checks and tests switched on, and optimisation switched off. As a result, when you debug, you can see all the variables, and compiling the executable is quite fast (because the optimisation is the slow bit). But, as a result of both of these things, the final executable produced in this mode will be *slow*. (Perhaps very much so).
+	•	RELEASE: the idea is, after developing your code in DEBUG mode, you've probably got it about right... so all the checks and tests get switched off, which speeds things up, and the compiler also does loads of extra work to optimise your code - it effectively rewrites it for you in a more efficient way whenever it can - HOWEVER, this means that in the final executable, it will have made lots of changes, and shifted things around so it doesn't line up in a simple way alongside your original source code. So "RELEASE" mode is: (1) hard to debug with! (2) Slower to compile, because of all the extra work, but (3) produces the fastest final executable file.
+In Eclipse, there are separate project preferences for DEBUG and RELEASE, so you have to be a bit careful when changing settings to know which mode you're in. Anyway, don't worry if that was a bit confusing - let's move on…
+ 
+5. Just hover over "Project (on the top menu), Build Configurations, Set Active" - you'll see Debug and Release, and one of them will be ticked, which is our current mode. For now, set it to "Release", and we'll just try and build the executable.
+ 
+6. Project, Build All will try and compile the executable. Give it a go - it won't work yet, but you'll see some errors in the bottom, which we'll then fix.
+ 
+7. Right-click on "hpv_hiv" in the project explorer, and choose Properties at the bottom.
+	•	At the top [in C/C++/Build], you'll see "Configuration" with "Release [active]" - EITHER select "All Configurations" from this menu - or carry out the next few steps twice, once for each mode. (I am the sort of person that does the latter, just to prove to myself that "All Configurations" really really worked! But I am over-paranoid. Choose "All Configurations" and just do it once…
+	•	The settings we need to change are all in the "Tool Settings" tab, but in a couple of different places. Basically, we need to persuade Eclipse to use GCC instead of Clang. [Go to C/C++ Build --> Settings --> Tool Settings] Ignore all the quotes below:-
+	◦	a)  "MacOS X C++ Linker", where the default command is "g++", change this to "/usr/local/bin/g++-9".
+	◦	b) "MacOS X C++ Linker", "Miscellaneous" - in the Linker flags, paste "-fopenmp"
+	◦	c) "GCC C++ Compiler", where the default command is "g++", again, paste "/usr/local/bin/g++-9"
+	◦	d) "GCC C++ Compiler", "Dialect", in "Language Standard", choose "ISO C++11 (-std=c++0x)"
+	◦	e) "GCC C++ Compiler", "Miscellaneous" - in the "Other flags" box, there may already be stuff there add a space, and -fopenmp 
+ 
+And that's it.
+ 
+8. Project, Build All - and hopefully this time, you should have a success that finishes with "Finished building target: hpv_hiv".
+And if I now look in my eclipse workspace, in the hpv_hiv project, there is a newly created "Release" folder. (And if you do the above in Debug mode, a similar "Debug" folder). Inside that is a file just called "hpv_hiv". If, in a terminal window, I do...
+cd ~/eclipse/hpv_hiv/Release   (use tab to autocomplete each part)
+and then...
+./hpv_hiv
+I get the "Usage... HPV_HIV path/to/params.txt" message etc - which is in my code. So here, it looks like I've got an executable that is ready to go, if I supply it with the right files...
+At which point, I think have a celebratory cup of tea, and let me know you've got this far. By that time, hopefully, I'll have got the output properly synced up, and wired in the extra vaccine. And then, as I said, it would be good to just do a "git pull" inside that eclipse project folder, and rebuild, without copying files around.... but back to that later!
