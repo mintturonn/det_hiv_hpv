@@ -1,0 +1,19 @@
+1. Install a good Java. This is not as easy as it once was, as Oracle has also been making life more complicated.
+	•	I suggest, go to https://www.azul.com and click on Downloads, Zulu Community. In the dropdowns from left to right, choose Java 8 (LTS), macOS, x86 64-bit, JDK, and then (at the moment), it gives me three download options. Go for the middle (.dmg), for an installer that seems to satisfy Mac OS.
+ 
+2. Next, we'll install Eclipse.
+	•	Go to https://www.eclipse.org, click Download in the top right - then look for the small bit of text "Download Packages" under the Download button, which then lets us choose "Eclipse IDE for C/C++ Developers" - and a link for "Mac Cocoa 64-bit". Download and Install, hopefully all is going smoothly so far!
+ 
+3. Next, we want git on the command line
+	•	I'm not sure what the Mac comes with, but I went - https://git-scm.com, and it detected my Mac on the front page, with a download link on the right. 
+	•	So now, in a Terminal Window (where we'll have to do a bit of stuff...), we should be able to type "git --version" and it will tells "git version 2.23.0", and "java -version", and we'll get a load of stuff about OpenJDK.
+ 
+4. Now we need to install a full C compiler. (Unfortunately, Mac's clang is, I gather, not quite up to what we want). First, we need to install a package manager, so we can get the GCC we want instead of what Mac thinks we want. Go to https://brew.sh, and copy that whole line of text under "Install Homebrew", and paste it straight into a Terminal window. It will tell you a load of stuff, and you type Y to confirm you want it to do it.
+ 
+5. Now in the same terminal window, "brew install gcc" - and after a few minutes for me, we're already to go.
+--------
+
+## this also from Wes, see if needs be done:
+A brief interlude - I think it would be a good idea if you create a new github repo for the C++ version of the code, and let's move all the stuff there. The reason is that doing so will make it a bit easier to "git pull" with all the files in the right place for Eclipse to build. We'd just put the .cpp and .h files in the root of that repo, and then have that as our eclipse project... otherwise, we'll have to do a bit of copying each time we update the C code. Hopefully that will make sense as we move below... There may also be ways of including all the "project setup" sort of things I do below in that repo - but it's good to document these steps anyway and explain them.
+ 
+So...  onto the next part:
